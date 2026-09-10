@@ -1,66 +1,66 @@
-<testsuites id="" name="" tests="25" failures="0" skipped="0" errors="0" time="17.933559999999996">
-<testsuite name="web-01-checkout-e2e.spec.ts" timestamp="2026-09-10T01:15:28.609Z" hostname="chromium" tests="1" failures="0" skipped="0" time="5.623" errors="0">
-<testcase name="WEB-01 Compra end-to-end › un usuario estándar completa una compra y recibe la confirmación" classname="web-01-checkout-e2e.spec.ts" time="5.623">
+<testsuites id="" name="" tests="25" failures="0" skipped="0" errors="0" time="16.406063000000003">
+<testsuite name="web-01-checkout-e2e.spec.ts" timestamp="2026-09-10T03:02:26.405Z" hostname="chromium" tests="1" failures="0" skipped="0" time="4.641" errors="0">
+<testcase name="WEB-01 Compra end-to-end › un usuario estándar completa una compra y recibe la confirmación" classname="web-01-checkout-e2e.spec.ts" time="4.641">
 </testcase>
 </testsuite>
-<testsuite name="web-02-login.spec.ts" timestamp="2026-09-10T01:15:28.609Z" hostname="chromium" tests="6" failures="0" skipped="0" time="28.565" errors="0">
-<testcase name="WEB-02 Login › credenciales válidas dan acceso al catálogo" classname="web-02-login.spec.ts" time="5.204">
+<testsuite name="web-02-login.spec.ts" timestamp="2026-09-10T03:02:26.405Z" hostname="chromium" tests="6" failures="0" skipped="0" time="23.276" errors="0">
+<testcase name="WEB-02 Login › credenciales válidas dan acceso al catálogo" classname="web-02-login.spec.ts" time="3.764">
 </testcase>
-<testcase name="WEB-02 Login › login rechazado: usuario vacío" classname="web-02-login.spec.ts" time="5.146">
+<testcase name="WEB-02 Login › login rechazado: usuario vacío" classname="web-02-login.spec.ts" time="3.654">
 </testcase>
-<testcase name="WEB-02 Login › login rechazado: password vacío" classname="web-02-login.spec.ts" time="4.214">
+<testcase name="WEB-02 Login › login rechazado: password vacío" classname="web-02-login.spec.ts" time="3.476">
 </testcase>
-<testcase name="WEB-02 Login › login rechazado: usuario inexistente" classname="web-02-login.spec.ts" time="4.629">
+<testcase name="WEB-02 Login › login rechazado: usuario inexistente" classname="web-02-login.spec.ts" time="3.624">
 </testcase>
-<testcase name="WEB-02 Login › login rechazado: password incorrecto" classname="web-02-login.spec.ts" time="4.589">
+<testcase name="WEB-02 Login › login rechazado: password incorrecto" classname="web-02-login.spec.ts" time="4.694">
 </testcase>
-<testcase name="WEB-02 Login › login rechazado: usuario bloqueado" classname="web-02-login.spec.ts" time="4.783">
-</testcase>
-</testsuite>
-<testsuite name="web-03-cart.spec.ts" timestamp="2026-09-10T01:15:28.609Z" hostname="chromium" tests="3" failures="0" skipped="0" time="14.856" errors="0">
-<testcase name="WEB-03 Carrito › añadir y quitar productos mantiene sincronizados badge y contenido" classname="web-03-cart.spec.ts" time="4.994">
-</testcase>
-<testcase name="WEB-03 Carrito › el carrito persiste al navegar entre catálogo y ficha de producto" classname="web-03-cart.spec.ts" time="5.171">
-</testcase>
-<testcase name="WEB-03 Carrito › eliminar el último producto deja el carrito vacío y sin badge" classname="web-03-cart.spec.ts" time="4.691">
+<testcase name="WEB-02 Login › login rechazado: usuario bloqueado" classname="web-02-login.spec.ts" time="4.064">
 </testcase>
 </testsuite>
-<testsuite name="web-04-checkout-validation.spec.ts" timestamp="2026-09-10T01:15:28.609Z" hostname="chromium" tests="5" failures="0" skipped="0" time="23.107" errors="0">
-<testcase name="WEB-04 Validación de datos de envío › no permite continuar sin nombre" classname="web-04-checkout-validation.spec.ts" time="4.858">
+<testsuite name="web-03-cart.spec.ts" timestamp="2026-09-10T03:02:26.405Z" hostname="chromium" tests="3" failures="0" skipped="0" time="14.262" errors="0">
+<testcase name="WEB-03 Carrito › añadir y quitar productos mantiene sincronizados badge y contenido" classname="web-03-cart.spec.ts" time="4.651">
 </testcase>
-<testcase name="WEB-04 Validación de datos de envío › no permite continuar sin apellido" classname="web-04-checkout-validation.spec.ts" time="4.727">
+<testcase name="WEB-03 Carrito › el carrito persiste al navegar entre catálogo y ficha de producto" classname="web-03-cart.spec.ts" time="4.919">
 </testcase>
-<testcase name="WEB-04 Validación de datos de envío › no permite continuar sin código postal" classname="web-04-checkout-validation.spec.ts" time="4.563">
-</testcase>
-<testcase name="WEB-04 Validación de datos de envío › con los tres campos completos avanza al resumen" classname="web-04-checkout-validation.spec.ts" time="4.54">
-</testcase>
-<testcase name="WEB-04 Validación de datos de envío › cancelar devuelve al carrito conservando los productos" classname="web-04-checkout-validation.spec.ts" time="4.419">
+<testcase name="WEB-03 Carrito › eliminar el último producto deja el carrito vacío y sin badge" classname="web-03-cart.spec.ts" time="4.692">
 </testcase>
 </testsuite>
-<testsuite name="web-05-inventory-sort.spec.ts" timestamp="2026-09-10T01:15:28.609Z" hostname="chromium" tests="4" failures="0" skipped="0" time="12.84" errors="0">
-<testcase name="WEB-05 Ordenamiento de productos › ordena por nombre A-Z" classname="web-05-inventory-sort.spec.ts" time="4.526">
+<testsuite name="web-04-checkout-validation.spec.ts" timestamp="2026-09-10T03:02:26.405Z" hostname="chromium" tests="5" failures="0" skipped="0" time="23.112" errors="0">
+<testcase name="WEB-04 Validación de datos de envío › no permite continuar sin nombre" classname="web-04-checkout-validation.spec.ts" time="5.161">
 </testcase>
-<testcase name="WEB-05 Ordenamiento de productos › ordena por nombre Z-A" classname="web-05-inventory-sort.spec.ts" time="2.532">
+<testcase name="WEB-04 Validación de datos de envío › no permite continuar sin apellido" classname="web-04-checkout-validation.spec.ts" time="4.862">
 </testcase>
-<testcase name="WEB-05 Ordenamiento de productos › ordena por precio ascendente" classname="web-05-inventory-sort.spec.ts" time="2.907">
+<testcase name="WEB-04 Validación de datos de envío › no permite continuar sin código postal" classname="web-04-checkout-validation.spec.ts" time="3.79">
 </testcase>
-<testcase name="WEB-05 Ordenamiento de productos › ordena por precio descendente" classname="web-05-inventory-sort.spec.ts" time="2.875">
+<testcase name="WEB-04 Validación de datos de envío › con los tres campos completos avanza al resumen" classname="web-04-checkout-validation.spec.ts" time="4.606">
 </testcase>
-</testsuite>
-<testsuite name="web-06-access-control.spec.ts" timestamp="2026-09-10T01:15:28.609Z" hostname="chromium" tests="5" failures="0" skipped="0" time="14.225" errors="0">
-<testcase name="WEB-06 Control de acceso › sin sesión, /inventory.html redirige al login" classname="web-06-access-control.spec.ts" time="2.721">
-</testcase>
-<testcase name="WEB-06 Control de acceso › sin sesión, /cart.html redirige al login" classname="web-06-access-control.spec.ts" time="2.68">
-</testcase>
-<testcase name="WEB-06 Control de acceso › sin sesión, /checkout-step-one.html redirige al login" classname="web-06-access-control.spec.ts" time="2.709">
-</testcase>
-<testcase name="WEB-06 Control de acceso › sin sesión, /checkout-step-two.html redirige al login" classname="web-06-access-control.spec.ts" time="2.667">
-</testcase>
-<testcase name="WEB-06 Control de acceso › cerrar sesión invalida el acceso al catálogo" classname="web-06-access-control.spec.ts" time="3.448">
+<testcase name="WEB-04 Validación de datos de envío › cancelar devuelve al carrito conservando los productos" classname="web-04-checkout-validation.spec.ts" time="4.693">
 </testcase>
 </testsuite>
-<testsuite name="web-07-problem-user-pricing.spec.ts" timestamp="2026-09-10T01:15:28.609Z" hostname="chromium" tests="1" failures="0" skipped="0" time="10.057" errors="0">
-<testcase name="WEB-07 Consistencia de precios › el subtotal del resumen coincide con el del carrito (problem_user)" classname="web-07-problem-user-pricing.spec.ts" time="10.057">
+<testsuite name="web-05-inventory-sort.spec.ts" timestamp="2026-09-10T03:02:26.405Z" hostname="chromium" tests="4" failures="0" skipped="0" time="12.56" errors="0">
+<testcase name="WEB-05 Ordenamiento de productos › ordena por nombre A-Z" classname="web-05-inventory-sort.spec.ts" time="4.69">
+</testcase>
+<testcase name="WEB-05 Ordenamiento de productos › ordena por nombre Z-A" classname="web-05-inventory-sort.spec.ts" time="2.655">
+</testcase>
+<testcase name="WEB-05 Ordenamiento de productos › ordena por precio ascendente" classname="web-05-inventory-sort.spec.ts" time="2.611">
+</testcase>
+<testcase name="WEB-05 Ordenamiento de productos › ordena por precio descendente" classname="web-05-inventory-sort.spec.ts" time="2.604">
+</testcase>
+</testsuite>
+<testsuite name="web-06-access-control.spec.ts" timestamp="2026-09-10T03:02:26.405Z" hostname="chromium" tests="5" failures="0" skipped="0" time="13.095" errors="0">
+<testcase name="WEB-06 Control de acceso › sin sesión, /inventory.html redirige al login" classname="web-06-access-control.spec.ts" time="2.206">
+</testcase>
+<testcase name="WEB-06 Control de acceso › sin sesión, /cart.html redirige al login" classname="web-06-access-control.spec.ts" time="2.795">
+</testcase>
+<testcase name="WEB-06 Control de acceso › sin sesión, /checkout-step-one.html redirige al login" classname="web-06-access-control.spec.ts" time="2.206">
+</testcase>
+<testcase name="WEB-06 Control de acceso › sin sesión, /checkout-step-two.html redirige al login" classname="web-06-access-control.spec.ts" time="2.91">
+</testcase>
+<testcase name="WEB-06 Control de acceso › cerrar sesión invalida el acceso al catálogo" classname="web-06-access-control.spec.ts" time="2.978">
+</testcase>
+</testsuite>
+<testsuite name="web-07-problem-user-pricing.spec.ts" timestamp="2026-09-10T03:02:26.405Z" hostname="chromium" tests="1" failures="0" skipped="0" time="9.218" errors="0">
+<testcase name="WEB-07 Consistencia de precios › el subtotal del resumen coincide con el del carrito (problem_user)" classname="web-07-problem-user-pricing.spec.ts" time="9.218">
 <properties>
 <property name="fail" value="BUG-WEB-01: problem_user duplica precios en el resumen">
 </property>

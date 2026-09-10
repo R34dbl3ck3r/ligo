@@ -23,6 +23,8 @@ Ejecutado el **9 de septiembre de 2026** contra los **entornos públicos reales*
 
 Subconjuntos `@smoke` (el gate que corre en cada Pull Request): Web **3/3**, API **8/8**.
 
+Índice navegable de todas las evidencias: [`evidence/README.md`](evidence/README.md).
+
 **9 defectos reales detectados** y documentados en [`docs/07-hallazgos.md`](docs/07-hallazgos.md);
 los 8 de Web y API se reprodujeron **en los entornos públicos**, no en una copia local.
 
