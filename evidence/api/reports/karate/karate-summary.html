@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="res/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="res/karate-report.css" type="text/css"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <script type="text/javascript" src="res/jquery.min.js"></script>
+    <script type="text/javascript" src="res/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="res/bootstrap.min.js"></script>
+    <script type="text/javascript" src="res/karate-report.js"></script>    
+    <title>Karate Summary Report</title>
+  </head>
+  <body>
+    <div id="root-container">
+      <div id="leftnav">
+        
+        <div>
+  <div class="nav-logo">
+    <a href="https://karatelabs.io">
+      <img src="karate-labs-logo-ring.svg" alt="Karate Labs"/>
+    </a>
+    <div class="nav-count">
+      <div id="nav-pass" class="bg-success">7</div>
+      <div id="nav-fail" class="bg-danger">0</div>
+    </div>
+  </div>
+  <div id="nav-env">
+    <div></div>
+  </div>
+  <div id="nav-type">
+    <div>Features</div>
+  </div>
+  <div id="nav-date">
+    <div>2026-09-09 07:48:31 p. m.</div>
+  </div>
+</div>
+
+      </div>
+      <div id="content">
+        <div class="page-heading alert alert-primary">
+          <a href="karate-tags.html">Tags</a><span class="feature-label">|</span>
+          <a href="karate-timeline.html">Timeline</a>
+        </div>
+        <table class="features-table table table-sm">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Title</th>
+              <th class="num">Passed</th>
+              <th class="num">Failed</th>
+              <th class="num">Scenarios</th>
+              <th class="num">Time (ms)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="passed">
+              <td>
+                <a href="src.test.java.booker.features.api-01-auth.html">src/test/java/booker/features/api-01-auth.feature</a>
+              </td>
+              <td>API-01 | Autenticación (POST /auth)</td>
+              <td class="num">5</td>
+              <td class="num">0</td>
+              <td class="num">5</td>
+              <td class="num">3931</td>
+            </tr>
+            <tr class="passed">
+              <td>
+                <a href="src.test.java.booker.features.api-02-create-booking.html">src/test/java/booker/features/api-02-create-booking.feature</a>
+              </td>
+              <td>API-02 | Creación de reservas (POST /booking)</td>
+              <td class="num">10</td>
+              <td class="num">0</td>
+              <td class="num">10</td>
+              <td class="num">3473</td>
+            </tr>
+            <tr class="passed">
+              <td>
+                <a href="src.test.java.booker.features.api-03-get-booking.html">src/test/java/booker/features/api-03-get-booking.feature</a>
+              </td>
+              <td>API-03 | Consulta de reservas (GET /booking, GET /booking/{id})</td>
+              <td class="num">5</td>
+              <td class="num">0</td>
+              <td class="num">5</td>
+              <td class="num">3228</td>
+            </tr>
+            <tr class="passed">
+              <td>
+                <a href="src.test.java.booker.features.api-04-update-booking.html">src/test/java/booker/features/api-04-update-booking.feature</a>
+              </td>
+              <td>API-04 | Actualización de reservas (PUT y PATCH /booking/{id})</td>
+              <td class="num">6</td>
+              <td class="num">0</td>
+              <td class="num">6</td>
+              <td class="num">5321</td>
+            </tr>
+            <tr class="passed">
+              <td>
+                <a href="src.test.java.booker.features.api-05-delete-booking.html">src/test/java/booker/features/api-05-delete-booking.feature</a>
+              </td>
+              <td>API-05 | Eliminación de reservas (DELETE /booking/{id})</td>
+              <td class="num">3</td>
+              <td class="num">0</td>
+              <td class="num">3</td>
+              <td class="num">2775</td>
+            </tr>
+            <tr class="passed">
+              <td>
+                <a href="src.test.java.booker.features.api-06-lifecycle.html">src/test/java/booker/features/api-06-lifecycle.feature</a>
+              </td>
+              <td>API-06 | Ciclo de vida completo y persistencia de la reserva</td>
+              <td class="num">1</td>
+              <td class="num">0</td>
+              <td class="num">1</td>
+              <td class="num">2458</td>
+            </tr>
+            <tr class="passed">
+              <td>
+                <a href="src.test.java.booker.features.api-07-health.html">src/test/java/booker/features/api-07-health.feature</a>
+              </td>
+              <td>API-07 | Disponibilidad del servicio (GET /ping)</td>
+              <td class="num">1</td>
+              <td class="num">0</td>
+              <td class="num">1</td>
+              <td class="num">309</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
+

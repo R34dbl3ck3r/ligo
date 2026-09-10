@@ -1,0 +1,44 @@
+# Dependencias
+node_modules/
+.pnp
+.pnp.js
+
+# Build / artefactos de ejecución
+target/
+dist/
+build/
+*.class
+
+# Reportes generados (las evidencias entregadas viven en /evidence)
+web/reports/
+mobile/reports/
+allure-results/
+allure-report/
+playwright-report/
+test-results/
+
+# Binarios de la app móvil: no se versionan, se descargan de las releases
+mobile/apps/*.apk
+mobile/apps/*.aab
+
+# Entorno y secretos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+*.log
+npm-debug.log*
+
+# Jar standalone de Karate (se descarga, no se versiona)
+api/karate.jar
+
+# Override local de Playwright (usa el Chrome instalado en la maquina)
+web/playwright.local.config.ts

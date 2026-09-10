@@ -1,0 +1,10 @@
+# Normaliza los finales de linea: se versiona LF y cada quien lo ve en su formato.
+# Importante porque los workflows corren en ubuntu-latest y el repo se edita en Windows.
+* text=auto eol=lf
+
+# Binarios: no tocar
+*.png binary
+*.jpg binary
+*.ico binary
+*.apk binary
+*.jar binary

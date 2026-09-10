@@ -1,0 +1,23 @@
+{
+  "name": "web-e2e-saucedemo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web E2E automation for SauceDemo - Playwright + TypeScript + POM",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:p0": "playwright test --grep @p0",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report reports/html",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"**/*.ts\""
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.0",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}
