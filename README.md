@@ -207,8 +207,8 @@ Detalle y justificación en [`docs/05-estrategia-ci-cd.md`](docs/05-estrategia-c
 
 ## ⚠️ Alcance y limitaciones
 
-- Las tres aplicaciones son **servicios públicos de terceros**: pueden estar caídos o
-  dormidos. La suite incluye un *health check* (`@health`) y timeouts generosos para
+- Las tres aplicaciones son **servicios públicos de terceros**: pueden estar caídos.
+- La suite incluye un *health check* (`@health`) y timeouts generosos para
   distinguir un fallo del entorno de un defecto del producto.
 - **Mobile pasa 9 de 11**: MOB-02 (carrito, P1) queda abierto por un defecto del propio
   framework al abrir productos que exigen desplazar el catálogo. Está aislado en
