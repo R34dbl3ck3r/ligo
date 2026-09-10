@@ -1,0 +1,130 @@
+name: Nightly - Full Regression
+
+# Objetivo: cobertura amplia sin bloquear a nadie. Se ejecuta de madrugada
+# (02:00 America/Lima = 07:00 UTC) e incluye lo que es demasiado lento o
+# demasiado dependiente de infraestructura para un Pull Request:
+#   - Web en varios navegadores y viewport móvil,
+#   - API completa,
+#   - Mobile sobre emulador Android real.
+
+on:
+  schedule:
+    - cron: '0 7 * * 1-5'
+  workflow_dispatch:
+
+env:
+  BASE_URL: https://www.saucedemo.com
+  BOOKER_BASE_URL: https://restful-booker.herokuapp.com
+
+jobs:
+  web-cross-browser:
+    name: Web (${{ matrix.project }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, firefox, mobile-chrome]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - working-directory: web
+        run: npm ci
+      - working-directory: web
+        run: npx playwright install --with-deps
+      - working-directory: web
+        run: npx playwright test --project=${{ matrix.project }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-nightly-${{ matrix.project }}
+          path: web/reports
+          retention-days: 30
+
+  api-full:
+    name: API completa (Karate)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      - working-directory: api
+        env:
+          BOOKER_USERNAME: ${{ secrets.BOOKER_USERNAME }}
+          BOOKER_PASSWORD: ${{ secrets.BOOKER_PASSWORD }}
+        run: mvn -B test -Dbooker.baseUrl=$BOOKER_BASE_URL
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-nightly-report
+          path: api/target/karate-reports
+          retention-days: 30
+
+  mobile-android:
+    name: Mobile Android (Appium + emulador)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - working-directory: mobile
+        run: npm ci
+      - name: Descargar el APK de la última release
+        working-directory: mobile
+        run: |
+          mkdir -p apps
+          curl -sL -o apps/mda.apk \
+            "$(curl -s https://api.github.com/repos/saucelabs/my-demo-app-android/releases/latest \
+              | grep browser_download_url | grep '\.apk' | head -1 | cut -d '"' -f 4)"
+          ls -lh apps
+      - name: Habilitar aceleración KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+      - name: Ejecutar la suite en el emulador
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          # Sin animaciones ni bloqueo de pantalla: la principal fuente de
+          # flakiness en Android CI.
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          disable-animations: true
+          script: cd mobile && APP_PATH=$PWD/apps/mda.apk ANDROID_VERSION=13 npm test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-nightly-report
+          path: mobile/reports
+          retention-days: 30
+
+  notify:
+    name: Notificar resultado
+    needs: [web-cross-browser, api-full, mobile-android]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resumen
+        run: |
+          echo "Web: ${{ needs.web-cross-browser.result }}"   >> $GITHUB_STEP_SUMMARY
+          echo "API: ${{ needs.api-full.result }}"            >> $GITHUB_STEP_SUMMARY
+          echo "Mobile: ${{ needs.mobile-android.result }}"   >> $GITHUB_STEP_SUMMARY
