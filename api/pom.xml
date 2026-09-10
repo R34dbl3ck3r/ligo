@@ -21,8 +21,17 @@
   </properties>
 
   <dependencies>
+    <!--
+      OJO con el groupId: Karate cambió de coordenada al pasar a 1.5.x.
+        com.intuit.karate  ->  publicado hasta 1.4.1 (no existe 1.5.1)
+        io.karatelabs      ->  desde 1.5.1 en adelante
+      El nombre de PAQUETE en el código sigue siendo com.intuit.karate
+      (com.intuit.karate.Runner), así que el runner no cambia.
+      Con el groupId antiguo la dependencia no resuelve, el módulo no compila
+      y `mvn test` falla antes de ejecutar un solo escenario.
+    -->
     <dependency>
-      <groupId>com.intuit.karate</groupId>
+      <groupId>io.karatelabs</groupId>
       <artifactId>karate-junit5</artifactId>
       <version>${karate.version}</version>
       <scope>test</scope>

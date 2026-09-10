@@ -42,3 +42,6 @@ api/karate.jar
 
 # Override local de Playwright (usa el Chrome instalado en la maquina)
 web/playwright.local.config.ts
+
+# Cache de Gradle que genera el driver de Appium
+mobile/.gradle/
