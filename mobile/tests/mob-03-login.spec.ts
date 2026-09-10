@@ -11,10 +11,12 @@ import { invalidLogins, users } from '@data/users';
  */
 describe('MOB-03 Login @regression @p1', () => {
   beforeEach(async () => {
+    // La precondición de este escenario es la pantalla de login, no el
+    // catálogo: tras un caso de login fallido la app se queda en el propio
+    // formulario, y esperar el catálogo introducía una dependencia falsa
+    // entre casos.
     await MenuScreen.resetAppState();
-    await ProductsScreen.waitForDisplayed();
-    await MenuScreen.open();
-    await MenuScreen.select('Log In');
+    await MenuScreen.openLogin();
     await LoginScreen.waitForDisplayed();
   });
 

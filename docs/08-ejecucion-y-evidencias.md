@@ -1,7 +1,8 @@
 # 8. Ejecución y evidencias
 
 > Punto evaluado: **"Implementa la solución y genera evidencias de ejecución"** (Reto Web,
-> punto 5) y **"Genera evidencias y reportes"** (Reto API, punto 5).
+> punto 5), **"Genera evidencias y reportes"** (Reto API, punto 5) e
+> **"Implementa los escenarios seleccionados y genera evidencias"** (Reto Mobile, punto 5).
 
 ---
 
@@ -16,7 +17,7 @@ indican los enunciados.
 | **Web — sólo `@smoke`** (gate de Pull Request) | idem | 3 pruebas | ✅ **3/3** | 3.4 s | idem |
 | **API** (Karate 1.5.1) | `https://restful-booker.herokuapp.com` | 31 escenarios · 7 features | ✅ **31/31** | 7.8 s | `evidence/api/reports/karate/karate-summary.html` |
 | **API — sólo `@smoke`** (gate de Pull Request) | idem | 8 escenarios | ✅ **8/8** | 5.3 s | idem |
-| **Mobile** (Appium + WDIO) | My Demo App Android | 11 pruebas | ⏸️ No ejecutado (fuera del alcance de estos dos retos; requiere emulador) | — | Código verificado con `tsc --noEmit` ✅ |
+| **Mobile** (Appium + WDIO) | My Demo App 2.2.0 · emulador Pixel 6 / Android 13 | 11 pruebas | ⚠️ **9/11** | 3.0 min | `evidence/mobile/reports/allure-report/index.html` |
 
 Las 25 pruebas Web incluyen **WEB-07, que falla de forma esperada** (`test.fail()`): es el
 detector del defecto BUG-WEB-01. Playwright la contabiliza como *passed* porque falló
@@ -57,12 +58,20 @@ evidence/
 │       ├── 04-datos-envio.png
 │       ├── 05-resumen-importes.png   <- Item total $45.98 + Tax $3.68 = Total $49.66
 │       └── 06-confirmacion.png
-└── api/
-    └── reports/karate/
-        ├── karate-summary.html       Resumen de la suite
-        ├── karate-tags.html          Resultados por etiqueta
-        ├── karate-timeline.html      Línea de tiempo (paralelismo, 4 hilos)
-        └── src.test.java.booker.features.*.html   Detalle petición/respuesta de cada escenario
+├── api/
+│   └── reports/karate/
+│       ├── karate-summary.html       Resumen de la suite
+│       ├── karate-tags.html          Resultados por etiqueta
+│       ├── karate-timeline.html      Línea de tiempo (paralelismo, 4 hilos)
+│       └── src.test.java.booker.features.*.html   Detalle petición/respuesta de cada escenario
+└── mobile/
+    ├── reports/allure-report/        Reporte Allure (pasos, capturas ante fallo)
+    └── screenshots/                  Emulador Pixel 6 / Android 13
+        ├── 01-catalogo.png
+        ├── 02-ficha-producto.png
+        ├── 03-anadido-al-carrito.png
+        ├── 04-carrito.png            <- Total: 1 Items  $29.99
+        └── 05-menu-lateral.png
 ```
 
 El reporte de Karate incluye **la petición y la respuesta completas de cada llamada**
@@ -160,10 +169,70 @@ que es la forma reproducible.
 
 ---
 
-## 8.6 Nota sobre Mobile
+## 8.6 Mobile — ejecutado en emulador real
 
-La capa `mobile/` (Appium + WebdriverIO) proviene de un alcance anterior y **no forma
-parte de los dos retos de esta entrega** (Web y API). Se conserva en el repositorio
-porque el workflow `nightly.yml` la incluye y su código está verificado estáticamente,
-pero no se ejecutó: un emulador Android requiere virtualización por hardware (KVM), no
-disponible en esta máquina.
+La capa `mobile/` **sí se ejecutó** en esta entrega, contra un emulador Android
+levantado en la máquina de desarrollo:
+
+| | |
+|---|---|
+| Dispositivo | AVD `qa_pixel6_a33` · perfil Pixel 6 |
+| Sistema | Android 13 (API 33) · `google_apis;x86_64` |
+| Aceleración | WHPX (arranque en ~40 s, sin ventana) |
+| Aplicación | My Demo App **2.2.0** (versionCode 25), APK de la release oficial |
+| Resultado | **9 de 11** pruebas · 3.0 min |
+
+**Qué pasa:** MOB-01 (compra completa, P0) ✅ · MOB-03 (login, 5 casos) ✅ ·
+MOB-04 (ordenamiento, 3 casos) ✅.
+
+**Qué falla:** MOB-02 (carrito, 2 casos, P1). El escenario abre un producto que
+exige desplazar el catálogo; la ficha no llega a abrirse y el segundo caso cae
+en cascada. Es un defecto **del framework de pruebas, no de la aplicación**:
+está aislado en `ProductsScreen.openProduct()` y no afecta al resto de la suite.
+Se deja abierto y documentado en lugar de silenciarlo.
+
+### Lo que sólo aparece ejecutando
+
+Cuatro supuestos del código no sobrevivieron al contacto con la app real. Los
+tres primeros se corrigieron; el cuarto sigue abierto:
+
+1. **`Reset App State` encadena dos diálogos** —confirmación y acuse— que
+   comparten `android:id/button1`. Sin confirmar ambos, la app se queda en el
+   diálogo y ninguna pantalla posterior aparece. Hacía fallar el `beforeEach` de
+   las cuatro suites.
+2. **El título del producto no es clicable.** En el catálogo sólo lo es la
+   imagen (`productIV`). Pulsar el texto no navegaba a ninguna parte.
+3. **El catálogo es una rejilla de dos columnas**, no una lista: dos productos
+   comparten coordenada vertical, así que emparejar por índice las listas de
+   títulos e imágenes es frágil.
+4. **Textos de menú desactualizados**: la app 2.2.0 usa `WebView` y `FingerPrint`,
+   no `Webview` ni `Biometrics`.
+
+También se descubrió que `parentElement()` de WebdriverIO **no sirve en Android**:
+se apoya en el ejecutor de JavaScript, que UiAutomator2 no implementa. La
+resolución padre-hijo se hace con XPath relativo anclado en el texto.
+
+### Defecto de CI corregido
+
+`mobile/package-lock.json` estaba **desincronizado** con `package.json` (faltaban
+las dependencias opcionales `@img/sharp-*`). `npm ci` fallaba, de modo que los
+jobs de mobile de `pull-request.yml` y `nightly.yml` habrían roto en el primer
+paso. Lock regenerado y verificado con `npm ci --dry-run`.
+
+### Reproducir
+
+```bash
+# 1. SDK: imagen de sistema y AVD
+sdkmanager "system-images;android-33;google_apis;x86_64"
+avdmanager create avd -n qa_pixel6_a33 -k "system-images;android-33;google_apis;x86_64" -d pixel_6
+emulator -avd qa_pixel6_a33 -no-window -no-audio -no-snapshot -gpu swiftshader_indirect
+
+# 2. APK de la última release oficial
+cd mobile && mkdir -p apps
+curl -sL -o apps/mda.apk "$(curl -s https://api.github.com/repos/saucelabs/my-demo-app-android/releases/latest   | grep browser_download_url | grep '\.apk' | head -1 | cut -d '"' -f 4)"
+
+# 3. Suite
+npm ci
+APP_PATH=$PWD/apps/mda.apk ANDROID_VERSION=13 npm test
+npm run report      # Allure
+```

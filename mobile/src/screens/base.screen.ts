@@ -1,3 +1,5 @@
+import { by } from '@utils/selectors';
+
 /**
  * Screen Object base.
  *
@@ -52,5 +54,21 @@ export abstract class BaseScreen {
       'android=new UiScrollable(new UiSelector().scrollable(true).instance(0))' +
         `.scrollIntoView(new UiSelector().textContains("${text}"))`,
     );
+  }
+
+  /**
+   * Scroll acotado a un contenedor concreto. Se espera a que el elemento
+   * quede realmente visible: el `findElement` que dispara el scroll puede
+   * resolver sin que el elemento haya llegado a pintarse.
+   */
+  protected async scrollIntoViewInside(
+    containerId: string,
+    text: string,
+  ): Promise<void> {
+    const element = $(by.scrollInside(containerId, text));
+    await element.waitForDisplayed({
+      timeout: 20_000,
+      timeoutMsg: `No se pudo desplazar hasta "${text}" dentro de ${containerId}`,
+    });
   }
 }

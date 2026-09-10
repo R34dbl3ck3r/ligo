@@ -96,6 +96,21 @@ mecanismos:
 - **Impacto:** no existe autenticación real. Cualquiera completa un pedido.
 - **Test:** `mobile/tests/mob-03-login.spec.ts` → *acepta credenciales arbitrarias*
   (`@known-issue`), aseverando el comportamiento actual como detector de cambio.
+- **Estado:** ✅ **confirmado en emulador real** (Pixel 6 · Android 13 · app 2.2.0).
+
+### BUG-MOB-02 · «Reset App State» no cierra la sesión iniciada
+- **Severidad:** Media · **Prioridad:** P2
+- **Pasos:** iniciar sesión → menú → *Reset App State* → confirmar → abrir el menú
+- **Obtenido:** el menú sigue mostrando *Log Out*: la sesión permanece abierta
+- **Esperado:** que una opción llamada «reiniciar el estado de la app» devuelva
+  también la sesión a su estado inicial
+- **Impacto:** un usuario que use esa opción para «empezar de cero» sigue
+  autenticado sin saberlo. En automatización obliga a que cada escenario
+  garantice su propia precondición de sesión.
+- **Detectado:** ejecutando `mob-03-login.spec.ts` contra el emulador: el segundo
+  caso fallaba porque *Log In* ya no existía en el menú.
+- **Tratamiento:** `MenuScreen.openLogin()` deja siempre el mismo punto de
+  partida, cierre o no la sesión el reset.
 
 ---
 
@@ -111,7 +126,8 @@ mecanismos:
 | BUG-API-05 | API | Baja | Comportamiento real aseverado + documentado |
 | BUG-API-06 | API | Media | Mitigado en configuración + documentado |
 | BUG-API-07 | API | Media | Comportamiento real aseverado + documentado |
-| BUG-MOB-01 | Mobile | Crítica | Comportamiento real aseverado + documentado |
+| BUG-MOB-01 | Mobile | Crítica | Comportamiento real aseverado + documentado · confirmado en emulador |
+| BUG-MOB-02 | Mobile | Media | Precondición robusta en el framework + documentado |
 
 > Nota: parte de estos comportamientos son *intencionados* en aplicaciones de
 > demostración pensadas para practicar automatización. Los reporto igual, porque el

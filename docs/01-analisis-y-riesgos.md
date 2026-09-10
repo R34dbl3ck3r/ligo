@@ -48,8 +48,8 @@ sistema para un QA, porque permite probar cómo se comporta el negocio cuando al
 | R-W6 | Se aceptan pedidos con datos de envío incompletos | Alto | Media | **P1** | WEB-04 |
 | R-W7 | El impuesto/total se calcula mal | Crítico | Baja | **P0** | WEB-01 (aserción de importes) |
 | R-W8 | El ordenamiento del catálogo es incorrecto | Bajo | Media | **P2** | WEB-05 |
-| R-W9 | Defectos visuales / imágenes cruzadas (`visual_user`, `problem_user`) | Medio | Alta | **P2** | *No automatizado* — ver §1.5 |
-| R-W10 | Latencia inaceptable (`performance_glitch_user`) | Medio | Alta | **P2** | *No automatizado* — ver §1.5 |
+| R-W9 | Defectos visuales / imágenes cruzadas (`visual_user`, `problem_user`) | Medio | Alta | **P2** | *No automatizado* — ver 1.5 |
+| R-W10 | Latencia inaceptable (`performance_glitch_user`) | Medio | Alta | **P2** | *No automatizado* — ver 1.5 |
 
 ---
 

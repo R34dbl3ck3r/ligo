@@ -19,14 +19,15 @@ Ejecutado el **9 de septiembre de 2026** contra los **entornos públicos reales*
 |---|---|---|---|---|
 | Web (Playwright · Chromium) | `www.saucedemo.com` | 25 | ✅ **25/25** en 17.9 s | `evidence/web/reports/playwright-html/index.html` |
 | API (Karate 1.5.1) | `restful-booker.herokuapp.com` | 31 | ✅ **31/31** en 7.8 s | `evidence/api/reports/karate/karate-summary.html` |
-| Mobile (Appium + WDIO) | My Demo App Android | 11 | ⏸️ fuera del alcance de esta entrega — código verificado con `tsc` | — |
+| Mobile (Appium + WDIO) | My Demo App 2.2.0 · emulador Pixel 6 / Android 13 | 11 | ⚠️ **9/11** en 3.0 min | `evidence/mobile/reports/allure-report/index.html` |
 
 Subconjuntos `@smoke` (el gate que corre en cada Pull Request): Web **3/3**, API **8/8**.
 
 Índice navegable de todas las evidencias: [`evidence/README.md`](evidence/README.md).
 
-**9 defectos reales detectados** y documentados en [`docs/07-hallazgos.md`](docs/07-hallazgos.md);
-los 8 de Web y API se reprodujeron **en los entornos públicos**, no en una copia local.
+**10 defectos reales detectados** y documentados en [`docs/07-hallazgos.md`](docs/07-hallazgos.md):
+los 8 de Web y API se reprodujeron **en los entornos públicos** y los 2 de Mobile **en el
+emulador**, no en copias locales.
 
 ---
 
@@ -208,8 +209,9 @@ Detalle y justificación en [`docs/05-estrategia-ci-cd.md`](docs/05-estrategia-c
 - Las tres aplicaciones son **servicios públicos de terceros**: pueden estar caídos o
   dormidos. La suite incluye un *health check* (`@health`) y timeouts generosos para
   distinguir un fallo del entorno de un defecto del producto.
-- **Mobile no se ejecutó** en esta entrega por falta de virtualización (KVM); el código
-  está verificado estáticamente y el job de CI está listo.
+- **Mobile pasa 9 de 11**: MOB-02 (carrito, P1) queda abierto por un defecto del propio
+  framework al abrir productos que exigen desplazar el catálogo. Está aislado en
+  `ProductsScreen.openProduct()` y documentado en [`docs/08`](docs/08-ejecucion-y-evidencias.md) §8.6.
 - **Regresión visual y rendimiento** quedan fuera del alcance por decisión documentada
   (ver [`docs/01`](docs/01-analisis-y-riesgos.md) §1.5), no por omisión.
 - **No hay credenciales, tokens ni datos sensibles** en el repositorio.

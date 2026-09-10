@@ -7,6 +7,7 @@ Ejecución del **9 de septiembre de 2026** contra los **entornos públicos reale
 |---|---|---|---|---|
 | **Web** · Playwright 1.56 · Chromium | 25 | ✅ **25/25** | 16.4 s | [`web/reports/playwright-html/index.html`](web/reports/playwright-html/index.html) |
 | **API** · Karate 1.5.1 · 4 hilos | 31 | ✅ **31/31** | 7.7 s | [`api/reports/karate/karate-summary.html`](api/reports/karate/karate-summary.html) |
+| **Mobile** · Appium + WDIO · emulador Pixel 6 | 11 | ⚠️ **9/11** | 3.0 min | [`mobile/reports/allure-report/index.html`](mobile/reports/allure-report/index.html) |
 
 > Los reportes son HTML: ábrelos con doble clic o con
 > `start evidence/api/reports/karate/karate-summary.html` (Windows).
@@ -83,6 +84,47 @@ El reporte de Karate incluye **la petición y la respuesta completas de cada lla
 | `karate-tags.html` | Resultados agrupados por etiqueta (`@smoke`, `@p0`, `@security`…) |
 | `karate-timeline.html` | Línea de tiempo de los 4 hilos: muestra el paralelismo real |
 | `src.test.java.booker.features.*.html` | Detalle petición/respuesta de cada escenario |
+
+---
+
+## Mobile — My Demo App 2.2.0 · 9/11
+
+Ejecutado contra un **emulador real**: AVD Pixel 6, Android 13 (API 33), acelerado
+por WHPX, con el APK de la release oficial (versionCode 25).
+
+| Suite | Casos | Resultado | Qué cubre |
+|---|---|---|---|
+| MOB-01 · Compra completa | 1 | ✅ | Catálogo → ficha → carrito → login → envío → pago → confirmación |
+| MOB-02 · Carrito | 2 | ❌ | Aritmética `total = precio × cantidad` y vaciado |
+| MOB-03 · Login | 5 | ✅ | Usuario válido, 3 particiones inválidas y credenciales arbitrarias |
+| MOB-04 · Ordenamiento | 3 | ✅ | Precio asc/desc y nombre asc, con oráculo calculado |
+
+**MOB-01, el flujo P0, pasa**: es el escenario que pedía el enunciado
+(«selecciona un flujo funcional relevante»).
+
+**MOB-02 queda abierto.** Abre un producto que exige desplazar el catálogo y la
+ficha no llega a abrirse; el segundo caso cae en cascada. Es un defecto **del
+framework, no de la app**, aislado en `ProductsScreen.openProduct()`. Se deja
+visible en lugar de silenciarlo.
+
+### Lo que sólo se descubre ejecutando
+
+Cuatro supuestos del código no sobrevivieron al contacto con la app real:
+
+| Supuesto | Realidad |
+|---|---|
+| *Reset App State* resetea al pulsarlo | Encadena **dos diálogos** (confirmar + acuse) que comparten `android:id/button1` |
+| El título del producto es clicable | **No lo es**: sólo la imagen (`productIV`) |
+| El catálogo es una lista | Es una **rejilla de 2 columnas**: dos productos comparten coordenada vertical |
+| El menú dice `Webview` / `Biometrics` | En 2.2.0 son `WebView` y `FingerPrint` |
+
+Además, `parentElement()` de WebdriverIO **no funciona en Android**: se apoya en el
+ejecutor de JavaScript, que UiAutomator2 no implementa.
+
+### Capturas del emulador
+
+`mobile/screenshots/` — catálogo, ficha, alta en carrito, carrito (**Total: 1 Items
+$29.99**) y menú lateral.
 
 ---
 

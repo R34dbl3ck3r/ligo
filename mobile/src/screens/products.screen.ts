@@ -43,9 +43,25 @@ class ProductsScreen extends BaseScreen {
     return $(by.text(name));
   }
 
+  /**
+   * Abre la ficha de un producto.
+   *
+   * Dos hechos de la app, verificados volcando la jerarquía real con
+   * `uiautomator dump`, condicionan esta implementación:
+   *
+   *  1. El catálogo es una REJILLA de dos columnas, no una lista: dos productos
+   *     comparten coordenada vertical. Emparejar por índice las listas de
+   *     títulos e imágenes es frágil, porque una celda parcialmente visible
+   *     aporta imagen pero todavía no título.
+   *  2. El título (`titleTV`) NO es clicable. El único elemento clicable de la
+   *     celda es la imagen (`productIV`).
+   *
+   * Se sube del título a su celda y se pulsa la imagen de esa celda, de modo
+   * que el test nombra el producto y nunca una posición ni una coordenada.
+   */
   async openProduct(name: string): Promise<void> {
-    await this.scrollIntoView(name);
-    await this.tap(this.productByName(name));
+    await this.scrollIntoViewInside('productRV', name);
+    await this.tap($(by.cellSiblingOf(name, 'productIV')));
   }
 
   async openCart(): Promise<void> {
