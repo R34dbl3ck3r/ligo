@@ -1,47 +1,82 @@
-# Dependencias
+# ==============================================================================
+# .gitignore — Prueba Técnica QA Automation (Web · API · Mobile)
+#
+# Criterio: se ignora todo lo que una ejecución puede REGENERAR y todo lo que es
+# local de una máquina. Lo que es ENTREGABLE se versiona siempre —de ahí que las
+# reglas de reportes estén ancladas a su carpeta de origen (`/web/reports/`) y no
+# sueltas (`reports/`), y que /evidence tenga una excepción explícita al final.
+# ==============================================================================
+
+# ------------------------------------------------------------------ Dependencias
 node_modules/
 .pnp
 .pnp.js
+.pnpm-store/
 
-# Build / artefactos de ejecución
+# -------------------------------------------------------- Build y artefactos
 target/
 dist/
 build/
 *.class
+*.tsbuildinfo
+.eslintcache
 
-# Reportes generados (las evidencias entregadas viven en /evidence)
-web/reports/
-mobile/reports/
-allure-results/
-allure-report/
-playwright-report/
-test-results/
+# ------------------------------------------------------ Reportes de ejecución
+# Anclados a la capa que los genera: fuera de estas rutas, un reporte es evidencia.
+/web/reports/
+/web/test-results/
+/web/playwright-report/
+/api/target/
+/mobile/reports/
+/mobile/allure-results/
+/mobile/allure-report/
 
-# Binarios de la app móvil: no se versionan, se descargan de las releases
-mobile/apps/*.apk
-mobile/apps/*.aab
+# ------------------------------------------------ Binarios y caches de Mobile
+# El APK no se versiona: se descarga de las releases de la app (ver mobile/README).
+/mobile/apps/*.apk
+/mobile/apps/*.aab
+/mobile/.gradle/
+/mobile/build/
+local.properties
 
-# Entorno y secretos
+# ------------------------------------------------------- Entorno y secretos
 .env
 .env.*
 !.env.example
 *.pem
 *.key
+*.keystore
 
-# Sistema / editores
+# --------------------------------------------- Herramientas locales no versionadas
+# Jar standalone de Karate: se descarga, pesa demasiado para el repositorio.
+/api/karate.jar
+# Override de Playwright para usar el Chrome instalado en la máquina local.
+# La configuración ENTREGADA es web/playwright.config.ts.
+/web/playwright.local.config.ts
+
+# ------------------------------------------------------------- Logs y crashes
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+hs_err_pid*
+replay_pid*
+
+# ------------------------------------------------------- Sistema y editores
 .DS_Store
+._*
 Thumbs.db
+desktop.ini
 .idea/
 .vscode/
 *.iml
-*.log
-npm-debug.log*
 
-# Jar standalone de Karate (se descarga, no se versiona)
-api/karate.jar
-
-# Override local de Playwright (usa el Chrome instalado en la maquina)
-web/playwright.local.config.ts
-
-# Cache de Gradle que genera el driver de Appium
-mobile/.gradle/
+# ==============================================================================
+# EXCEPCIÓN: /evidence es el entregable del apartado 5.5 (reportes, capturas,
+# logs y trace de la ejecución real). Contiene reportes generados, pero se
+# versiona ENTERO: el README y docs/08 enlazan directamente a estos archivos.
+# Esta negación va la última a propósito: en .gitignore gana la regla más tardía.
+# ==============================================================================
+!/evidence/
+!/evidence/**

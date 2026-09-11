@@ -1,0 +1,4 @@
+{
+  "using": "-android uiautomator",
+  "value": "new UiScrollable(new UiSelector().resourceId(\"com.saucelabs.mydemoapp.android:id/productRV\")).setMaxSearchSwipes(12).scrollIntoView(new UiSelector().text(\"Sauce Labs Backpack\"))"
+}

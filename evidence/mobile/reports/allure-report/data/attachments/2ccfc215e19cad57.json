@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//*[@text=\"Sauce Labs Backpack\"]/parent::*//*[@resource-id=\"com.saucelabs.mydemoapp.android:id/productIV\"]"
+}
